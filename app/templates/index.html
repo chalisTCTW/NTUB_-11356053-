@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>北商課程查詢選課系統</title>
+<link rel="stylesheet" href="{{ base }}static/style.css">
+</head>
+<body data-mode="{{ mode }}" data-base="{{ base }}">
+<header class="top">
+  <div class="wrap row">
+    <a class="brand" href="#"><b>北商課程查詢選課系統</b><small>NTUB COURSE SEARCH &amp; ENROLLMENT</small></a>
+    <div class="who" id="who"></div>
+  </div>
+</header>
+<nav class="bar" role="tablist">
+  <div class="wrap">
+    <button role="tab" data-view="search" aria-selected="true">課程查詢<small>SEARCH</small></button>
+    <button role="tab" data-view="table" aria-selected="false">我的課表<small>MY TIMETABLE</small></button>
+    <button role="tab" data-view="depts" aria-selected="false">系所一覽<small>DEPARTMENTS</small></button>
+  </div>
+</nav>
+
+<main>
+  <section id="v-search">
+    <div class="band">
+      <div class="wrap">
+        <div class="st"><small>Course Search</small><h2>課程查詢</h2></div>
+        <div class="tabs groups" id="groups"></div>
+        <form class="card search" id="sform">
+          <label class="f">學期<select name="term" id="f-term"></select></label>
+          <label class="f">學制<select name="edu" id="f-edu"></select></label>
+          <label class="f wide">系所<select name="dept" id="f-dept"></select></label>
+          <label class="f">必選修<select name="kind"><option value="">全部</option><option value="必">必修</option><option value="選">選修</option></select></label>
+          <label class="f">星期<select name="day" id="f-day"></select></label>
+          <label class="f">關鍵字<input name="q" placeholder="課名、課號、教師、班級"></label>
+          <div class="acts"><button class="btn" type="submit">查詢</button><button class="btn ghost" type="reset">清除</button></div>
+        </form>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="sum"><span id="count" class="note"></span><span class="note" id="credit-mini"></span></div>
+      <div class="card tblwrap">
+        <table class="tbl">
+          <thead><tr><th>課號</th><th>科目名稱</th><th class="hm">教師</th><th>時間／教室</th><th>學分</th><th class="hm">已選／上限</th><th>類別</th><th></th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+        <div class="empty" id="empty" hidden>沒有符合條件的課程</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="v-table" hidden>
+    <div class="msec wrap">
+      <div class="st"><small>My Timetable</small><h2>我的課表</h2></div>
+      <div class="card">
+        <div class="stats" id="stats"></div>
+        <div class="tblwrap"><table class="tt" id="tt"></table></div>
+      </div>
+      <div class="card" style="margin-top:20px">
+        <h3>已選課程<small>ENROLLED</small></h3>
+        <div class="tblwrap"><table class="tbl"><thead><tr><th>課號</th><th>科目名稱</th><th class="hm">教師</th><th>時間／教室</th><th>學分</th><th></th></tr></thead><tbody id="mine"></tbody></table></div>
+        <div class="empty" id="mine-empty">尚未選課</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="v-depts" hidden>
+    <div class="msec wrap">
+      <div class="st"><small>Departments</small><h2>系所一覽</h2></div>
+      <p class="note" style="text-align:center">目前開放資訊管理、應用外語、企業管理三系課程，其餘系所陸續建置中。</p>
+      <div class="dgrid" id="dgrid"></div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">課程資料取自國立臺北商業大學公開開課資訊（113-1～115-1）・本網站為課程作業，非學校官方系統，登入與選課僅供展示</div></footer>
+
+<dialog id="login">
+  <div class="card">
+    <button class="x" data-close aria-label="關閉">×</button>
+    <h3>登入<small>SIGN IN</small></h3>
+    <form id="lform">
+      <label class="f">學號<input name="sid" required autocomplete="off"></label>
+      <label class="f">姓名（選填）<input name="name" autocomplete="off"></label>
+      <label class="f">密碼<input name="pw" type="password" required autocomplete="off"></label>
+      <p class="note" style="margin:0">展示用登入：輸入任意學號與密碼即可，資料不會送出。</p>
+      <button class="btn" type="submit">登入</button>
+    </form>
+  </div>
+</dialog>
+
+<dialog id="detail"><div class="card"><button class="x" data-close aria-label="關閉">×</button><div id="dbody"></div></div></dialog>
+<div class="toast" id="toast"></div>
+<script src="{{ base }}static/app.js"></script>
+</body>
+</html>
